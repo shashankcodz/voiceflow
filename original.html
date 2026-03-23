@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Voca — Don't Type. Just Speak.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ============================================================
+   VOCA — Voice OS Landing Page
+   Theme: Dark Luxury Tech / Cinematic Black + Electric Cyan
+   ============================================================ */
+
+:root {
+  --black:     #06060a;
+  --black-2:   #0d0d14;
+  --black-3:   #12121c;
+  --surface:   #16161f;
+  --border:    rgba(255,255,255,0.07);
+  --border-2:  rgba(255,255,255,0.12);
+  --cyan:      #00e5ff;
+  --cyan-dim:  #00b8cc;
+  --cyan-glow: rgba(0, 229, 255, 0.18);
+  --cyan-glow2:rgba(0, 229, 255, 0.08);
+  --violet:    #8b5cf6;
+  --white:     #ffffff;
+  --white-70:  rgba(255,255,255,0.70);
+  --white-45:  rgba(255,255,255,0.45);
+  --white-25:  rgba(255,255,255,0.25);
+  --white-10:  rgba(255,255,255,0.10);
+  --white-6:   rgba(255,255,255,0.06);
+  --green:     #00e5a0;
+  --radius:    14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: rgba(0,229,255,0.25); border-radius: 3px; }
+
+/* ============================================================
+   NOISE TEXTURE OVERLAY
+   ============================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s;
+}
+
+nav.scrolled {
+  background: rgba(6,6,10,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom-color: var(--border);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+
+.nav-logo-mark {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.nav-logo-mark svg { width: 17px; height: 17px; fill: #000; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--white-45);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--white); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-ghost {
+  padding: 8px 18px;
+  border: 1px solid var(--border-2);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--white-70);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex; align-items: center;
+}
+
+.btn-ghost:hover {
+  background: var(--white-6);
+  color: var(--white);
+  border-color: var(--border-2);
+}
+
+.btn-primary {
+  padding: 9px 20px;
+  border-radius: 100px;
+  background: var(--cyan);
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  letter-spacing: -0.2px;
+}
+
+.btn-primary:hover {
+  background: #fff;
+  transform: scale(1.03);
+  box-shadow: 0 0 24px rgba(0,229,255,0.35);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background glow orbs */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,229,255,0.12), transparent 70%);
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+}
+
+.orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(139,92,246,0.10), transparent 70%);
+  bottom: 0; right: -100px;
+}
+
+.orb-3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(0,229,255,0.07), transparent 70%);
+  bottom: 100px; left: -50px;
+}
+
+/* Grid lines */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid rgba(0,229,255,0.25);
+  border-radius: 100px;
+  background: rgba(0,229,255,0.06);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  position: relative; z-index: 2;
+  animation: fadeUp 0.6s ease both;
+}
+
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: blink 1.8s ease infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+.hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(54px, 8vw, 96px);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  position: relative; z-index: 2;
+  animation: fadeUp 0.7s 0.1s ease both;
+  max-width: 900px;
+}
+
+.hero h1 .line-2 {
+  display: block;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--white-45);
+  max-width: 500px;
+  line-height: 1.6;
+  margin-top: 22px;
+  position: relative; z-index: 2;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 36px;
+  position: relative; z-index: 2;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+
+.btn-hero {
+  padding: 14px 28px;
+  border-radius: 100px;
+  background: var(--cyan);
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  letter-spacing: -0.2px;
+  box-shadow: 0 0 32px rgba(0,229,255,0.25);
+}
+
+.btn-hero:hover {
+  background: var(--white);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 48px rgba(0,229,255,0.35);
+}
+
+.btn-hero-ghost {
+  padding: 14px 28px;
+  border-radius: 100px;
+  background: var(--white-6);
+  color: var(--white-70);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: 1px solid var(--border-2);
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+
+.btn-hero-ghost:hover {
+  background: var(--white-10);
+  color: var(--white);
+}
+
+.hero-platforms {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 22px;
+  position: relative; z-index: 2;
+  animation: fadeUp 0.7s 0.4s ease both;
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--white-25);
+  font-weight: 500;
+}
+
+.platform-item svg { width: 14px; height: 14px; opacity: 0.4; }
+
+/* ── Demo Card ── */
+.hero-demo {
+  position: relative; z-index: 2;
+  width: 100%;
+  max-width: 760px;
+  margin-top: 64px;
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+
+.demo-card {
+  background: var(--black-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(0,229,255,0.05),
+    0 40px 80px rgba(0,0,0,0.6),
+    0 0 80px rgba(0,229,255,0.05);
+}
+
+.demo-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+
+.demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+.demo-dot:nth-child(1) { background: #ff5f57; }
+.demo-dot:nth-child(2) { background: #febc2e; }
+.demo-dot:nth-child(3) { background: #28c840; }
+
+.demo-url {
+  flex: 1;
+  margin-left: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--white-25);
+  display: flex; align-items: center; gap: 6px;
+}
+
+.demo-content {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.demo-col-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.demo-col-label.raw { color: var(--white-25); }
+.demo-col-label.clean { color: var(--cyan); }
+
+.demo-text-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  min-height: 160px;
+}
+
+.demo-text-box.raw-text { color: var(--white-45); font-style: italic; }
+.demo-text-box.clean-text { color: var(--white-70); }
+
+.demo-text-box.clean-text .highlight {
+  color: var(--cyan);
+  font-weight: 500;
+}
+
+.demo-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  margin-top: 32px;
+}
+
+.demo-arrow-inner {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 14px;
+  background: var(--cyan);
+  vertical-align: middle;
+  margin-left: 1px;
+  animation: cursor-blink 0.8s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ============================================================
+   MARQUEE — LOGOS
+   ============================================================ */
+.marquee-section {
+  padding: 60px 0 40px;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.marquee-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white-25);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-app {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 32px;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white-25);
+  transition: color 0.2s;
+}
+
+.marquee-app:hover { color: var(--white-70); }
+
+.app-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* Fade edges */
+.marquee-section::before,
+.marquee-section::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 140px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee-section::before {
+  left: 0;
+  background: linear-gradient(to right, var(--black), transparent);
+}
+
+.marquee-section::after {
+  right: 0;
+  background: linear-gradient(to left, var(--black), transparent);
+}
+
+/* ============================================================
+   SPEED SECTION
+   ============================================================ */
+.speed-section {
+  padding: 120px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 20px;
+}
+
+.section-tag::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--cyan);
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  max-width: 680px;
+}
+
+.section-sub {
+  font-size: 17px;
+  color: var(--white-45);
+  line-height: 1.65;
+  max-width: 520px;
+  margin-top: 16px;
+}
+
+.speed-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  margin-top: 56px;
+  align-items: start;
+}
+
+.speed-card {
+  background: var(--black-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.speed-card.voca {
+  border-color: rgba(0,229,255,0.2);
+  background: rgba(0,229,255,0.03);
+}
+
+.speed-card.voca::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+
+.speed-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.speed-method {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--white-25);
+}
+
+.speed-method.active { color: var(--cyan); }
+
+.speed-wpm {
+  font-family: var(--font-head);
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--white-25);
+}
+
+.speed-wpm.active {
+  color: var(--cyan);
+  text-shadow: 0 0 24px rgba(0,229,255,0.3);
+}
+
+.speed-unit {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white-25);
+  margin-left: 4px;
+}
+
+.speed-bar-wrap {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+.speed-bar {
+  height: 100%;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.15);
+  transition: width 1.5s ease;
+}
+
+.speed-bar.active {
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+
+.speed-text {
+  font-size: 13px;
+  color: var(--white-45);
+  line-height: 1.7;
+}
+
+.speed-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: 48px; height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--black-3);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--white-25);
+  font-family: var(--font-head);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   FEATURES SECTION
+   ============================================================ */
+.features-section {
+  padding: 80px 40px 120px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.features-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: end;
+  margin-bottom: 60px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.feature-card {
+  background: var(--black-2);
+  padding: 36px 32px;
+  position: relative;
+  transition: background 0.25s;
+}
+
+.feature-card:hover { background: var(--black-3); }
+
+.feature-card.span-2 {
+  grid-column: span 2;
+}
+
+.feature-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.feature-icon.cyan  { background: rgba(0,229,255,0.1);  }
+.feature-icon.violet{ background: rgba(139,92,246,0.1); }
+.feature-icon.green { background: rgba(0,229,160,0.1);  }
+
+.feature-title {
+  font-family: var(--font-head);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.feature-desc {
+  font-size: 14px;
+  color: var(--white-45);
+  line-height: 1.65;
+}
+
+/* Waveform animation inside features */
+.waveform {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 24px;
+  height: 40px;
+}
+
+.wave-bar {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--cyan);
+  opacity: 0.4;
+  animation: wave 1.2s ease infinite;
+}
+
+.wave-bar:nth-child(1)  { height: 16px; animation-delay: 0s;    }
+.wave-bar:nth-child(2)  { height: 28px; animation-delay: 0.1s;  }
+.wave-bar:nth-child(3)  { height: 22px; animation-delay: 0.2s;  }
+.wave-bar:nth-child(4)  { height: 36px; animation-delay: 0.15s; }
+.wave-bar:nth-child(5)  { height: 18px; animation-delay: 0.25s; }
+.wave-bar:nth-child(6)  { height: 30px; animation-delay: 0.05s; }
+.wave-bar:nth-child(7)  { height: 24px; animation-delay: 0.3s;  }
+.wave-bar:nth-child(8)  { height: 20px; animation-delay: 0.18s; }
+.wave-bar:nth-child(9)  { height: 32px; animation-delay: 0.08s; }
+.wave-bar:nth-child(10) { height: 14px; animation-delay: 0.22s; }
+.wave-bar:nth-child(11) { height: 26px; animation-delay: 0.12s; }
+.wave-bar:nth-child(12) { height: 20px; animation-delay: 0.28s; }
+
+@keyframes wave {
+  0%,100% { transform: scaleY(1); opacity: 0.4; }
+  50%      { transform: scaleY(1.6); opacity: 0.9; }
+}
+
+/* Snippet cards inside features */
+.snippets-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.snippet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.snippet-trigger {
+  color: var(--cyan);
+  font-weight: 600;
+  font-size: 12px;
+  background: rgba(0,229,255,0.08);
+  padding: 2px 7px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.snippet-text {
+  color: var(--white-45);
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Lang chips */
+.lang-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.lang-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 12px;
+  font-size: 12.5px;
+  color: var(--white-45);
+  display: flex; align-items: center; gap: 5px;
+}
+
+/* ============================================================
+   PLATFORMS SECTION
+   ============================================================ */
+.platforms-section {
+  padding: 80px 40px 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.platforms-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0,229,255,0.06), transparent);
+  pointer-events: none;
+}
+
+.platforms-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.platforms-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.platform-card {
+  background: var(--black-2);
+  padding: 48px 44px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  transition: background 0.2s;
+}
+
+.platform-card:hover { background: var(--black-3); }
+
+.platform-logo {
+  width: 64px; height: 64px;
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 32px;
+}
+
+.platform-info h3 {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.platform-info p {
+  font-size: 14px;
+  color: var(--white-45);
+  line-height: 1.55;
+}
+
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--cyan);
+  background: rgba(0,229,255,0.07);
+  border: 1px solid rgba(0,229,255,0.15);
+  padding: 3px 9px;
+  border-radius: 100px;
+}
+
+/* ============================================================
+   HOW IT WORKS
+   ============================================================ */
+.how-section {
+  padding: 80px 40px 120px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-top: 56px;
+}
+
+.step-card {
+  background: var(--black-2);
+  padding: 44px 36px;
+  position: relative;
+}
+
+.step-number {
+  font-family: var(--font-head);
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.step-title {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--white-45);
+  line-height: 1.65;
+}
+
+.step-icon {
+  position: absolute;
+  top: 36px; right: 32px;
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  background: var(--white-6);
+}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.testimonials-section {
+  padding: 80px 40px 120px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.testimonial-card {
+  background: var(--black-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.testimonial-card:hover {
+  border-color: var(--border-2);
+  transform: translateY(-3px);
+}
+
+.testimonial-card.featured {
+  background: rgba(0,229,255,0.04);
+  border-color: rgba(0,229,255,0.15);
+}
+
+.t-stars {
+  display: flex; gap: 2px; margin-bottom: 14px;
+  color: var(--cyan); font-size: 13px;
+}
+
+.t-quote {
+  font-size: 14.5px;
+  color: var(--white-70);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.t-author {
+  display: flex; align-items: center; gap: 12px;
+}
+
+.t-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.t-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.t-role {
+  font-size: 12px;
+  color: var(--white-45);
+}
+
+/* ============================================================
+   PRICING
+   ============================================================ */
+.pricing-section {
+  padding: 80px 40px 120px;
+  position: relative;
+}
+
+.pricing-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 50% 0%, rgba(139,92,246,0.06), transparent);
+  pointer-events: none;
+}
+
+.pricing-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.pricing-card {
+  background: var(--black-2);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.pricing-card.pro {
+  background: rgba(0,229,255,0.04);
+}
+
+.pricing-card.pro::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+
+.pricing-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white-25);
+  margin-bottom: 8px;
+}
+
+.pricing-tag.hot { color: var(--cyan); }
+
+.pricing-name {
+  font-family: var(--font-head);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+
+.pricing-price {
+  font-family: var(--font-head);
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.pricing-price sup {
+  font-size: 20px;
+  font-weight: 600;
+  vertical-align: super;
+  margin-right: 2px;
+}
+
+.pricing-period {
+  font-size: 13px;
+  color: var(--white-25);
+  margin-bottom: 24px;
+}
+
+.pricing-divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 24px;
+}
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  margin-bottom: 28px;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--white-70);
+}
+
+.pricing-features li::before {
+  content: '✓';
+  color: var(--cyan);
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pricing-cta {
+  width: 100%;
+  padding: 13px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: 1px solid var(--border-2);
+  background: transparent;
+  color: var(--white-70);
+  transition: all 0.2s;
+}
+
+.pricing-cta:hover {
+  background: var(--white-6);
+  color: var(--white);
+}
+
+.pricing-cta.primary {
+  background: var(--cyan);
+  color: #000;
+  border-color: transparent;
+}
+
+.pricing-cta.primary:hover {
+  background: var(--white);
+  box-shadow: 0 0 24px rgba(0,229,255,0.25);
+}
+
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+.cta-section {
+  padding: 80px 40px 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-glow {
+  position: absolute;
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,229,255,0.1), transparent 70%);
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.cta-card {
+  background: var(--black-3);
+  border: 1px solid rgba(0,229,255,0.12);
+  border-radius: var(--radius-xl);
+  padding: 80px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+
+.cta-title {
+  font-family: var(--font-head);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.cta-sub {
+  font-size: 17px;
+  color: var(--white-45);
+  line-height: 1.6;
+  max-width: 460px;
+  margin: 0 auto 36px;
+}
+
+.cta-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cta-note {
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--white-25);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 60px 40px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  color: var(--white-45);
+  line-height: 1.65;
+  margin-top: 14px;
+  max-width: 260px;
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--white-25);
+  margin-bottom: 16px;
+}
+
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.footer-col a {
+  font-size: 14px;
+  color: var(--white-45);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover { color: var(--white); }
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 48px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--white-25);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   DEMO SECTION (Interactive)
+   ============================================================ */
+.interactive-section {
+  padding: 80px 40px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mic-demo-wrap {
+  background: var(--black-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  text-align: center;
+  margin-top: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mic-demo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,229,255,0.06), transparent);
+  pointer-events: none;
+}
+
+.mic-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.mic-ring-outer {
+  position: absolute;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.15);
+  animation: ring-pulse 2s ease infinite;
+  opacity: 0;
+}
+
+.mic-ring-outer:nth-child(2) { animation-delay: 0.5s; }
+.mic-ring-outer:nth-child(3) { animation-delay: 1s; }
+
+@keyframes ring-pulse {
+  0%   { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2);   opacity: 0; }
+}
+
+.mic-btn-main {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px;
+  position: relative; z-index: 2;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 32px rgba(0,229,255,0.3);
+}
+
+.mic-btn-main:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 48px rgba(0,229,255,0.45);
+}
+
+.mic-btn-main.active {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 0 40px rgba(239,68,68,0.4);
+  animation: mic-pulse 0.8s ease infinite;
+}
+
+@keyframes mic-pulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+
+.mic-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--white-25);
+}
+
+.mic-shortcut kbd {
+  background: var(--white-6);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-family: var(--font-body);
+}
+
+.transcript-box {
+  background: var(--black-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  min-height: 80px;
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--white-70);
+  margin-top: 28px;
+  position: relative;
+}
+
+.transcript-placeholder {
+  color: var(--white-25);
+  font-style: italic;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--white-6);
+  color: var(--white-45);
+  margin-top: 20px;
+}
+
+.status-pill.listening {
+  background: rgba(239,68,68,0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239,68,68,0.2);
+}
+
+.status-dot-sm {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-pill.listening .status-dot-sm {
+  animation: blink 0.8s step-end infinite;
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.text-gradient {
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mt-auto { margin-top: auto; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links, .btn-ghost { display: none; }
+  .hero { padding: 120px 20px 60px; }
+  .demo-content { grid-template-columns: 1fr; }
+  .demo-arrow { display: none; }
+  .speed-grid { grid-template-columns: 1fr; }
+  .speed-vs { display: none; }
+  .features-grid { grid-template-columns: 1fr; }
+  .feature-card.span-2 { grid-column: span 1; }
+  .features-header { grid-template-columns: 1fr; }
+  .platforms-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .cta-card { padding: 48px 28px; }
+  .speed-section, .features-section, .how-section, .testimonials-section { padding: 60px 20px; }
+  .platforms-section, .pricing-section, .cta-section { padding: 60px 20px; }
+  .interactive-section { padding: 60px 20px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V22h2v-2.07A8 8 0 0 0 20 12h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z"/></svg>
+    </div>
+    Voca
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn-ghost" href="#pricing">Sign in</a>
+    <a class="btn-primary" href="#try">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V22h2v-2.07A8 8 0 0 0 20 12h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z"/></svg>
+      Try free
+    </a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Now in open beta — free forever
+  </div>
+
+  <h1>
+    Don't type.<br/>
+    <span class="line-2">Just Speak.</span>
+  </h1>
+
+  <p class="hero-sub">
+    Voca turns your voice into polished, perfect text — everywhere on your computer. Any app, any website, any input field.
+  </p>
+
+  <div class="hero-ctas">
+    <a class="btn-hero" href="#try">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V22h2v-2.07A8 8 0 0 0 20 12h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z"/></svg>
+      Download Free
+    </a>
+    <a class="btn-hero-ghost" href="#try">
+      🎙 Try in browser
+    </a>
+  </div>
+
+  <div class="hero-platforms">
+    <div class="platform-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      macOS
+    </div>
+    <div class="platform-item" style="color:rgba(255,255,255,0.12)">·</div>
+    <div class="platform-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-7 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-7-1.24v-7.54l7 .03z"/></svg>
+      Windows
+    </div>
+    <div class="platform-item" style="color:rgba(255,255,255,0.12)">·</div>
+    <div class="platform-item">📱 iOS</div>
+    <div class="platform-item" style="color:rgba(255,255,255,0.12)">·</div>
+    <div class="platform-item">🤖 Android</div>
+  </div>
+
+  <!-- Demo Card -->
+  <div class="hero-demo">
+    <div class="demo-card">
+      <div class="demo-bar">
+        <div class="demo-dot"></div>
+        <div class="demo-dot"></div>
+        <div class="demo-dot"></div>
+        <div class="demo-url">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 1a11 11 0 1 0 0 22A11 11 0 0 0 12 1zm0 2a9 9 0 1 1 0 18A9 9 0 0 1 12 3z"/></svg>
+          gmail.com/mail
+        </div>
+      </div>
+      <div class="demo-content">
+        <div>
+          <div class="demo-col-label raw">🎙 You said</div>
+          <div class="demo-text-box raw-text" id="raw-text">
+            "umm hey so i wanted to talk about the the meeting on thursday and like we should probably move it maybe to friday because i have um a conflict and also can we invite the design team because they they need to be there too thanks"
+          </div>
+        </div>
+        <div>
+          <div class="demo-col-label clean">✨ Voca output</div>
+          <div class="demo-text-box clean-text" id="clean-text">
+            Hi, I wanted to discuss the meeting on <span class="highlight">Thursday</span> — could we move it to <span class="highlight">Friday</span>? I have a conflict. It would also be great to <span class="highlight">invite the design team</span>, as their input is needed.<span class="typing-cursor"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MARQUEE
+     ============================================================ -->
+<div class="marquee-section">
+  <p class="marquee-label">Works in every app you already use</p>
+  <div class="marquee-track" id="marquee">
+    <!-- First set -->
+    <div class="marquee-app"><div class="app-icon">📧</div>Gmail</div>
+    <div class="marquee-app"><div class="app-icon">💬</div>Slack</div>
+    <div class="marquee-app"><div class="app-icon">📝</div>Notion</div>
+    <div class="marquee-app"><div class="app-icon">💻</div>VS Code</div>
+    <div class="marquee-app"><div class="app-icon">🤖</div>ChatGPT</div>
+    <div class="marquee-app"><div class="app-icon">🎯</div>Linear</div>
+    <div class="marquee-app"><div class="app-icon">📊</div>Google Docs</div>
+    <div class="marquee-app"><div class="app-icon">🐦</div>X / Twitter</div>
+    <div class="marquee-app"><div class="app-icon">💼</div>LinkedIn</div>
+    <div class="marquee-app"><div class="app-icon">🌀</div>Cursor</div>
+    <div class="marquee-app"><div class="app-icon">📱</div>WhatsApp</div>
+    <div class="marquee-app"><div class="app-icon">🎬</div>YouTube</div>
+    <div class="marquee-app"><div class="app-icon">🟣</div>Figma</div>
+    <div class="marquee-app"><div class="app-icon">📌</div>Asana</div>
+    <div class="marquee-app"><div class="app-icon">🔵</div>Jira</div>
+    <!-- Duplicate for loop -->
+    <div class="marquee-app"><div class="app-icon">📧</div>Gmail</div>
+    <div class="marquee-app"><div class="app-icon">💬</div>Slack</div>
+    <div class="marquee-app"><div class="app-icon">📝</div>Notion</div>
+    <div class="marquee-app"><div class="app-icon">💻</div>VS Code</div>
+    <div class="marquee-app"><div class="app-icon">🤖</div>ChatGPT</div>
+    <div class="marquee-app"><div class="app-icon">🎯</div>Linear</div>
+    <div class="marquee-app"><div class="app-icon">📊</div>Google Docs</div>
+    <div class="marquee-app"><div class="app-icon">🐦</div>X / Twitter</div>
+    <div class="marquee-app"><div class="app-icon">💼</div>LinkedIn</div>
+    <div class="marquee-app"><div class="app-icon">🌀</div>Cursor</div>
+    <div class="marquee-app"><div class="app-icon">📱</div>WhatsApp</div>
+    <div class="marquee-app"><div class="app-icon">🎬</div>YouTube</div>
+    <div class="marquee-app"><div class="app-icon">🟣</div>Figma</div>
+    <div class="marquee-app"><div class="app-icon">📌</div>Asana</div>
+    <div class="marquee-app"><div class="app-icon">🔵</div>Jira</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SPEED SECTION
+     ============================================================ -->
+<section class="speed-section">
+  <div class="section-tag">Performance</div>
+  <h2 class="section-title reveal">4× faster than typing. <span class="text-gradient">Same quality.</span></h2>
+  <p class="section-sub reveal">The average person types 45 words per minute. We speak at 220. Voca bridges that gap — instantly.</p>
+
+  <div class="speed-grid reveal">
+    <div class="speed-card">
+      <div class="speed-card-header">
+        <span class="speed-method">Keyboard</span>
+      </div>
+      <div class="speed-wpm">45<span class="speed-unit">wpm</span></div>
+      <div class="speed-bar-wrap"><div class="speed-bar" style="width:20%" id="bar-keyboard"></div></div>
+      <p class="speed-text">Hours spent drafting emails, filling forms, writing messages — one keystroke at a time.</p>
+    </div>
+
+    <div class="speed-vs">VS</div>
+
+    <div class="speed-card voca">
+      <div class="speed-card-header">
+        <span class="speed-method active">Voca Voice</span>
+      </div>
+      <div class="speed-wpm active">220<span class="speed-unit">wpm</span></div>
+      <div class="speed-bar-wrap"><div class="speed-bar active" style="width:100%" id="bar-voca"></div></div>
+      <p class="speed-text" style="color:var(--white-60)">Speak your thoughts at the speed of thought. AI cleans it up instantly. No extra steps.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIVE DEMO (Interactive)
+     ============================================================ -->
+<section class="interactive-section" id="try">
+  <div class="section-tag">Live Demo</div>
+  <h2 class="section-title reveal">Try it <span class="text-gradient">right now</span></h2>
+  <p class="section-sub reveal">Click the mic, speak into your browser, and watch Voca transcribe in real time.</p>
+
+  <div class="mic-demo-wrap reveal">
+    <div class="mic-shortcut">Press <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> or click the mic
+    </div>
+
+    <div class="mic-ring">
+      <div class="mic-ring-outer"></div>
+      <div class="mic-ring-outer"></div>
+      <div class="mic-ring-outer"></div>
+      <button class="mic-btn-main" id="demo-mic" title="Click to speak">🎙</button>
+    </div>
+
+    <div class="status-pill" id="demo-status">
+      <div class="status-dot-sm"></div>
+      Ready — click mic to start
+    </div>
+
+    <div class="transcript-box" id="demo-transcript">
+      <span class="transcript-placeholder">Your words will appear here...</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURES
+     ============================================================ -->
+<section class="features-section" id="features">
+  <div class="features-header">
+    <div>
+      <div class="section-tag">Features</div>
+      <h2 class="section-title reveal">Everything you need, <span class="text-gradient">nothing you don't</span></h2>
+    </div>
+    <p class="section-sub reveal" style="margin:0">Built for people who think faster than they type — which is everyone.</p>
+  </div>
+
+  <div class="features-grid">
+    <!-- 1 - Universal input -->
+    <div class="feature-card span-2">
+      <div class="feature-icon cyan">🎤</div>
+      <h3 class="feature-title">Works in every input, everywhere</h3>
+      <p class="feature-desc">Click any text field, search bar, chat box, or form — anywhere on your computer or phone — and just speak. Voca detects your cursor automatically.</p>
+      <div class="waveform" id="waveform">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+    </div>
+
+    <!-- 2 - AI editing -->
+    <div class="feature-card">
+      <div class="feature-icon violet">✨</div>
+      <h3 class="feature-title">AI auto-editing</h3>
+      <p class="feature-desc">Voca removes filler words, fixes grammar, and formats your speech — so your "um, like, yeah" becomes crisp, professional text instantly.</p>
+    </div>
+
+    <!-- 3 - Snippets -->
+    <div class="feature-card">
+      <div class="feature-icon green">⚡</div>
+      <h3 class="feature-title">Voice snippets</h3>
+      <p class="feature-desc">Say a trigger word, get a full template. Perfect for signatures, FAQs, and canned replies.</p>
+      <div class="snippets-demo">
+        <div class="snippet-chip">
+          <span class="snippet-trigger">calendar</span>
+          <span class="snippet-text">Book a call → calendly.com/you</span>
+        </div>
+        <div class="snippet-chip">
+          <span class="snippet-trigger">intro</span>
+          <span class="snippet-text">Hi! I'm [Name], founder of...</span>
+        </div>
+        <div class="snippet-chip">
+          <span class="snippet-trigger">closing</span>
+          <span class="snippet-text">Best regards, [Name]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 - Languages -->
+    <div class="feature-card">
+      <div class="feature-icon cyan">🌐</div>
+      <h3 class="feature-title">100+ languages</h3>
+      <p class="feature-desc">Voca auto-detects your language and transcribes. Switch languages mid-sentence naturally.</p>
+      <div class="lang-chips">
+        <div class="lang-chip">🇺🇸 English</div>
+        <div class="lang-chip">🇮🇳 Hindi</div>
+        <div class="lang-chip">🇩🇪 German</div>
+        <div class="lang-chip">🇯🇵 Japanese</div>
+        <div class="lang-chip">🇫🇷 French</div>
+        <div class="lang-chip">🇧🇷 Portuguese</div>
+        <div class="lang-chip" style="color:var(--cyan);border-color:rgba(0,229,255,0.2)">+94 more</div>
+      </div>
+    </div>
+
+    <!-- 5 - Privacy -->
+    <div class="feature-card">
+      <div class="feature-icon violet">🔒</div>
+      <h3 class="feature-title">Private by design</h3>
+      <p class="feature-desc">Your voice data stays encrypted. We never store recordings. HIPAA-eligible and SOC 2 ready for teams.</p>
+    </div>
+
+    <!-- 6 - Keyboard shortcut -->
+    <div class="feature-card">
+      <div class="feature-icon green">⌨️</div>
+      <h3 class="feature-title">Instant hotkey</h3>
+      <p class="feature-desc">Press <strong style="color:var(--white-70)">Alt+Shift+V</strong> anywhere — inside any app, any window — to toggle Voca on and off in an instant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PLATFORMS
+     ============================================================ -->
+<section class="platforms-section" id="platforms">
+  <div class="platforms-bg"></div>
+  <div class="platforms-inner">
+    <div class="platforms-header">
+      <div class="section-tag" style="justify-content:center">Platforms</div>
+      <h2 class="section-title reveal" style="text-align:center;margin:0 auto">On your desk. In your pocket.<br/><span class="text-gradient">Always with you.</span></h2>
+    </div>
+
+    <div class="platforms-grid reveal">
+      <div class="platform-card">
+        <div class="platform-logo" style="background:rgba(255,255,255,0.05)">🍎</div>
+        <div class="platform-info">
+          <h3>macOS</h3>
+          <p>Native menu bar app. Works in every macOS application — Finder, Terminal, browser, anything.</p>
+          <div class="platform-badge">✓ Available now</div>
+        </div>
+      </div>
+
+      <div class="platform-card">
+        <div class="platform-logo" style="background:rgba(0,120,215,0.1)">🪟</div>
+        <div class="platform-info">
+          <h3>Windows</h3>
+          <p>System tray integration. Voice works across all Win32, UWP, and browser apps seamlessly.</p>
+          <div class="platform-badge">✓ Available now</div>
+        </div>
+      </div>
+
+      <div class="platform-card">
+        <div class="platform-logo" style="background:rgba(255,255,255,0.05)">📱</div>
+        <div class="platform-info">
+          <h3>iPhone / iOS</h3>
+          <p>Custom keyboard & share extension. Speak into any app — Messages, Notes, Safari, and more.</p>
+          <div class="platform-badge">✓ Available now</div>
+        </div>
+      </div>
+
+      <div class="platform-card">
+        <div class="platform-logo" style="background:rgba(0,229,160,0.08)">🤖</div>
+        <div class="platform-info">
+          <h3>Android</h3>
+          <p>System-level voice integration. Dictate anywhere — Google, WhatsApp, Chrome, every app.</p>
+          <div class="platform-badge" style="color:var(--green);border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.06)">🚀 Beta — free & unlimited</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS
+     ============================================================ -->
+<section class="how-section" id="how">
+  <div class="section-tag">How it works</div>
+  <h2 class="section-title reveal">Up and running in <span class="text-gradient">60 seconds</span></h2>
+
+  <div class="steps-grid reveal">
+    <div class="step-card">
+      <span class="step-number">01</span>
+      <div class="step-icon">⬇️</div>
+      <h3 class="step-title">Download Voca</h3>
+      <p class="step-desc">Install the free app on your Mac, Windows, iOS, or Android device. No account required to start.</p>
+    </div>
+
+    <div class="step-card">
+      <span class="step-number">02</span>
+      <div class="step-icon">🎯</div>
+      <h3 class="step-title">Click any input</h3>
+      <p class="step-desc">Click into any text field — an email, a search bar, a code comment, a chat message, anywhere.</p>
+    </div>
+
+    <div class="step-card">
+      <span class="step-number">03</span>
+      <div class="step-icon">✨</div>
+      <h3 class="step-title">Speak. Done.</h3>
+      <p class="step-desc">Press the hotkey or tap the mic. Speak naturally. Watch polished text appear in real time. That's it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+<section class="testimonials-section">
+  <div class="testimonials-header">
+    <div class="section-tag" style="justify-content:center">Testimonials</div>
+    <h2 class="section-title reveal" style="text-align:center;margin:0 auto">People who <span class="text-gradient">never want to type</span> again</h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card featured">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"I dictated 70% of our Q2 board doc with it. Absolute time saver — it sounds more natural than my typing ever did."</p>
+      <div class="t-author">
+        <div class="t-avatar">JS</div>
+        <div>
+          <div class="t-name">Jordan S.</div>
+          <div class="t-role">CEO, Series B startup</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"As a developer I use Voca for commit messages, PR descriptions, and Slack. It's shockingly good at technical language."</p>
+      <div class="t-author">
+        <div class="t-avatar">AK</div>
+        <div>
+          <div class="t-name">Arjun K.</div>
+          <div class="t-role">Senior Engineer, Bangalore</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"I have RSI and this has genuinely changed my life. I can write all day without wrist pain. This should be built into every OS."</p>
+      <div class="t-author">
+        <div class="t-avatar">MS</div>
+        <div>
+          <div class="t-name">Maya S.</div>
+          <div class="t-role">UX Designer</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"I was skeptical. Then I answered 40 emails in 20 minutes while walking around my apartment. I'm never going back."</p>
+      <div class="t-author">
+        <div class="t-avatar">TR</div>
+        <div>
+          <div class="t-name">Thomas R.</div>
+          <div class="t-role">Founder, Fintech</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"The AI cleanup is unreal. I say 'um' and 'like' constantly — none of it shows up. It's like having a personal editor live."</p>
+      <div class="t-author">
+        <div class="t-avatar">LC</div>
+        <div>
+          <div class="t-name">Layla C.</div>
+          <div class="t-role">Content Strategist</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"Using it to write legal notes on-the-go is incredible. Accurate, fast, HIPAA-compliant. Our whole firm is on it now."</p>
+      <div class="t-author">
+        <div class="t-avatar">PV</div>
+        <div>
+          <div class="t-name">Priya V.</div>
+          <div class="t-role">Attorney, Mumbai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRICING
+     ============================================================ -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-bg"></div>
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <div class="section-tag" style="justify-content:center">Pricing</div>
+      <h2 class="section-title reveal" style="text-align:center;margin:0 auto">Start free. <span class="text-gradient">Scale when ready.</span></h2>
+      <p class="section-sub reveal" style="text-align:center;margin:12px auto 0">No credit card required. 14-day pro trial included.</p>
+    </div>
+
+    <div class="pricing-grid reveal">
+      <!-- Free -->
+      <div class="pricing-card">
+        <div class="pricing-tag">Personal</div>
+        <div class="pricing-name">Free</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-period">forever free</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>50 minutes / month voice input</li>
+          <li>AI filler-word removal</li>
+          <li>Works on all apps & websites</li>
+          <li>10 voice snippets</li>
+          <li>3 languages</li>
+          <li>Basic support</li>
+        </ul>
+        <button class="pricing-cta mt-auto">Get started free</button>
+      </div>
+
+      <!-- Pro -->
+      <div class="pricing-card pro">
+        <div class="pricing-tag hot">⚡ Most popular</div>
+        <div class="pricing-name">Pro</div>
+        <div class="pricing-price"><sup>$</sup>12</div>
+        <div class="pricing-period">per month · billed annually</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Unlimited voice input</li>
+          <li>Advanced AI auto-editing & tone</li>
+          <li>Unlimited voice snippets</li>
+          <li>100+ languages</li>
+          <li>Personal dictionary (auto-learns)</li>
+          <li>Priority support</li>
+          <li>All platforms: Mac, Windows, iOS, Android</li>
+        </ul>
+        <button class="pricing-cta primary mt-auto">Start 14-day free trial</button>
+      </div>
+
+      <!-- Business -->
+      <div class="pricing-card">
+        <div class="pricing-tag">Teams</div>
+        <div class="pricing-name">Business</div>
+        <div class="pricing-price"><sup>$</sup>29</div>
+        <div class="pricing-period">per user / month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Everything in Pro</li>
+          <li>Centralized team admin</li>
+          <li>SOC 2 Type II compliant</li>
+          <li>HIPAA-eligible</li>
+          <li>Shared snippet library</li>
+          <li>SSO & SCIM</li>
+          <li>Dedicated success manager</li>
+        </ul>
+        <button class="pricing-cta mt-auto">Contact sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA
+     ============================================================ -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="cta-card">
+      <div class="hero-badge" style="margin:0 auto 24px">
+        <span class="badge-dot"></span>
+        Join 50,000+ people speaking their way through work
+      </div>
+      <h2 class="cta-title">Your keyboard<br/>is <span class="text-gradient">optional now.</span></h2>
+      <p class="cta-sub">Download Voca free and speak your first 50 minutes today. No account needed.</p>
+      <div class="cta-btns">
+        <a class="btn-hero" href="#">
+          ⬇️ Download Free
+        </a>
+        <a class="btn-hero-ghost" href="#">
+          🎙 Try in browser
+        </a>
+      </div>
+      <p class="cta-note">macOS · Windows · iPhone · Android &nbsp;·&nbsp; No credit card required</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#" style="font-size:18px">
+        <div class="nav-logo-mark" style="width:28px;height:28px;border-radius:8px">
+          <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V22h2v-2.07A8 8 0 0 0 20 12h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z"/></svg>
+        </div>
+        Voca
+      </a>
+      <p>Voice-to-text AI that works everywhere. Built for the way humans actually think and communicate.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Changelog</a></li>
+        <li><a href="#">Roadmap</a></li>
+        <li><a href="#">Download</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Status</a></li>
+        <li><a href="#">Community</a></li>
+        <li><a href="#">Affiliates</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 Voca. All rights reserved.</span>
+    <span>Made with ❤️ for people who hate typing</span>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// ── Nav scroll ──────────────────────────────────────────────
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ── Scroll reveal ────────────────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ── Live demo mic ────────────────────────────────────────────
+const micBtn      = document.getElementById('demo-mic');
+const statusPill  = document.getElementById('demo-status');
+const transcriptEl = document.getElementById('demo-transcript');
+
+let recognition = null;
+let listening   = false;
+let fullText    = '';
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (!SpeechRecognition) {
+  micBtn.title = 'Speech API not supported in this browser — try Chrome';
+  micBtn.style.opacity = '0.5';
+  micBtn.style.cursor  = 'not-allowed';
+}
+
+function setStatus(text, isListening) {
+  statusPill.className = 'status-pill' + (isListening ? ' listening' : '');
+  statusPill.innerHTML = `<div class="status-dot-sm"></div> ${text}`;
+}
+
+micBtn.addEventListener('click', () => {
+  if (!SpeechRecognition) {
+    alert('Speech Recognition is not supported in this browser.\nPlease use Google Chrome for the live demo.');
+    return;
+  }
+  listening ? stopDemo() : startDemo();
+});
+
+function startDemo() {
+  recognition = new SpeechRecognition();
+  recognition.lang            = 'en-US';
+  recognition.continuous      = true;
+  recognition.interimResults  = true;
+  fullText = '';
+
+  recognition.onstart = () => {
+    listening = true;
+    micBtn.classList.add('active');
+    micBtn.textContent = '⏹';
+    setStatus('Listening — speak now…', true);
+    transcriptEl.innerHTML = '<span class="typing-cursor"></span>';
+  };
+
+  recognition.onresult = (e) => {
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) {
+        fullText += capitalize(t.trim()) + ' ';
+      } else {
+        interim = t;
+      }
+    }
+    transcriptEl.innerHTML =
+      (fullText || '') +
+      (interim ? `<span style="color:var(--white-25)">${interim}</span>` : '') +
+      '<span class="typing-cursor"></span>';
+  };
+
+  recognition.onerror = (e) => {
+    const msgs = {
+      'not-allowed': 'Mic permission denied. Allow mic access in your browser.',
+      'no-speech'  : 'No speech detected. Try again.',
+      'network'    : 'Network error.',
+    };
+    setStatus(msgs[e.error] || 'Error: ' + e.error, false);
+    stopDemo();
+  };
+
+  recognition.onend = () => {
+    if (listening) { try { recognition.start(); } catch(e){} }
+  };
+
+  recognition.start();
+}
+
+function stopDemo() {
+  listening = false;
+  if (recognition) { recognition.stop(); recognition = null; }
+  micBtn.classList.remove('active');
+  micBtn.textContent = '🎙';
+  setStatus(fullText ? 'Done! Click mic to continue.' : 'Ready — click mic to start', false);
+  if (!fullText) {
+    transcriptEl.innerHTML = '<span class="transcript-placeholder">Your words will appear here...</span>';
+  }
+}
+
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// ── Keyboard shortcut ────────────────────────────────────────
+document.addEventListener('keydown', (e) => {
+  if (e.altKey && e.shiftKey && e.code === 'KeyV') {
+    e.preventDefault();
+    micBtn.click();
+  }
+});
+
+// ── Animated type demo hero ──────────────────────────────────
+const rawMessages = [
+  '"umm so the the quarterly report is due friday and i think we should like include the data from Q3 but also maybe add a section for predictions going forward"',
+  '"hey can you um schedule a meeting for like thursday afternoon maybe 2 or 3 pm with the the whole team and also send a reminder the day before thanks"',
+  '"so i was thinking we could redesign the landing page make it more modern with a dark theme and bigger headlines and like the hero section should have some kind of animation"',
+];
+
+const cleanMessages = [
+  'The quarterly report is due <strong style="color:var(--cyan)">Friday</strong>. I suggest we include the Q3 data and add a forward-looking <strong style="color:var(--cyan)">predictions section</strong>.',
+  'Please schedule a team meeting for <strong style="color:var(--cyan)">Thursday afternoon</strong> — around 2–3 PM — and send a <strong style="color:var(--cyan)">reminder the day before</strong>.',
+  'I think we should <strong style="color:var(--cyan)">redesign the landing page</strong> with a modern dark theme, larger headlines, and an <strong style="color:var(--cyan)">animated hero section</strong>.',
+];
+
+let msgIndex = 0;
+
+function cycleDemo() {
+  msgIndex = (msgIndex + 1) % rawMessages.length;
+  const raw   = document.getElementById('raw-text');
+  const clean = document.getElementById('clean-text');
+  if (!raw || !clean) return;
+
+  raw.style.opacity   = 0;
+  clean.style.opacity = 0;
+
+  setTimeout(() => {
+    raw.textContent   = rawMessages[msgIndex];
+    clean.innerHTML   = cleanMessages[msgIndex] + '<span class="typing-cursor"></span>';
+    raw.style.transition   = 'opacity 0.5s';
+    clean.style.transition = 'opacity 0.5s';
+    raw.style.opacity   = 1;
+    clean.style.opacity = 1;
+  }, 400);
+}
+
+setInterval(cycleDemo, 5000);
+</script>
+</body>
+</html>
