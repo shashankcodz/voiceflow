@@ -15,6 +15,29 @@ const cleanMessages = [
 export default function Hero() {
   const [msgIndex, setMsgIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('');
+
+  const handleWaitlistSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('Submitting...');
+    try {
+      const response = await fetch('http://localhost:5000/api/join-waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setStatus('✅ Joined waitlist!');
+        setEmail('');
+      } else {
+        setStatus(`❌ ${data.error || 'Something went wrong'}`);
+      }
+    } catch (err) {
+      setStatus('❌ Could not connect to server.');
+    }
+  };
 
   useEffect(() => {
     const currentInterval = setInterval(() => {
@@ -51,15 +74,33 @@ export default function Hero() {
       </p>
 
       <div className="hero-ctas">
-        <a className="btn-hero" href="#try">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V22h2v-2.07A8 8 0 0 0 20 12h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z" />
-          </svg>
-          Download Free
-        </a>
-        <a className="btn-hero-ghost" href="#try">
-          🎙 Try in browser
-        </a>
+        <form onSubmit={handleWaitlistSubmit} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <input 
+            type="email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email" 
+            required
+            spellCheck="false"
+            style={{
+              padding: '12px 16px',
+              borderRadius: '8px',
+              border: '1px solid rgba(255,255,255,0.2)',
+              background: 'rgba(255, 255, 255, 0.05)',
+              color: '#fff',
+              fontSize: '15px',
+              width: '280px',
+              outline: 'none'
+            }}
+          />
+          <button type="submit" className="btn-hero" style={{ border: 'none', cursor: 'pointer' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V22h2v-2.07A8 8 0 0 0 20 12h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z" />
+            </svg>
+            Join Waitlist
+          </button>
+        </form>
+        {status && <div style={{ marginTop: '12px', fontSize: '14px', color: status.includes('✅') ? '#4ade80' : '#f87171' }}>{status}</div>}
       </div>
 
       <div className="hero-platforms">
